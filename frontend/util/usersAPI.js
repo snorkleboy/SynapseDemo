@@ -5,7 +5,7 @@ export const fetchAllUsers =  function(){
     return fetch('api/users', options)
     .then((res)=>{
         const json = res.json();
-        if (res.status === 'ok'){
+        if (res.ok === true){
             return json
         } else {
             return json.then((err)=> {throw err})

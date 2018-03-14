@@ -42,17 +42,16 @@ class App extends React.Component {
         return handler.bind(this);
     }
     render() {
-        console.log(this.state.error);
         if (!this.state.loading){
             return (
                 <main className="app">
                     <h1>My Users</h1>
-                        {
-                            this.state.error? 
-                                <h2 className='error'>this.state.error</h2> 
-                            : 
-                                null
-                        }
+                    {
+                        this.state.error? 
+                            <h2 className='error'>{this.state.error}</h2> 
+                        : 
+                            null
+                    }
                     <div className="row">
                         <UserList
                             users={this.state.users}

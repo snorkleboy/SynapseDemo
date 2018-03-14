@@ -22232,7 +22232,6 @@ var App = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            console.log(this.state.error);
             if (!this.state.loading) {
                 return _react2.default.createElement(
                     'main',
@@ -22245,7 +22244,7 @@ var App = function (_React$Component) {
                     this.state.error ? _react2.default.createElement(
                         'h2',
                         { className: 'error' },
-                        'this.state.error'
+                        this.state.error
                     ) : null,
                     _react2.default.createElement(
                         'div',
@@ -22432,7 +22431,7 @@ var fetchAllUsers = exports.fetchAllUsers = function fetchAllUsers() {
     };
     return fetch('api/users', options).then(function (res) {
         var json = res.json();
-        if (res.status === 'ok') {
+        if (res.ok === true) {
             return json;
         } else {
             return json.then(function (err) {
