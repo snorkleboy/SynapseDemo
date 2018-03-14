@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
-  def synapse_init_args()
+  def synapse_init
     # https://docs.synapsepay.com/docs/api-initialization
     args = {
       # synapse client_id
@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
 
   def synapse_get_users
     args = {
-      client:   client,
+      client:   @Synapse_Client,
       # (optional) uses API default unless specified
       page:     1,
       # (optional) uses API default of 20 unless specified, larger values take longer
@@ -30,8 +30,6 @@ class ApplicationController < ActionController::Base
       # (optional) filters by name/email match
       query:    nil
     }
-    users = SynapsePayRest::User.all(args2)
-    p '','','','',users.map{|obj| obj.legal_names}
-    
+    users = SynapsePayRest::User.all(args)    
   end
 end
