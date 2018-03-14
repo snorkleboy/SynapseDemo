@@ -10,20 +10,3 @@ class Api::SynapseUsersController < ApplicationController
 end
 
 
-def extract_info(user)
-    return {
-        logins:user.logins,
-        phone_numbers:user.phone_numbers,
-        legal_names:user.legal_names,
-        permission:user.permission,
-        note:user.note ,
-        supp_id:user.supp_id ,
-        is_business:user.is_business ,
-        cip_tag:user.cip_tag ,
-        flag:user.flag ,
-        ips:user.ips,
-        oauth_key:user.oauth_key,
-        expires_in:user.expires_in,
-        base_documents:user.base_documents
-    }
-end
