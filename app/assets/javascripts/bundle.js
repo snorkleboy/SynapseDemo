@@ -22149,6 +22149,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(82);
@@ -22158,6 +22160,12 @@ var _react2 = _interopRequireDefault(_react);
 var _reactDom = __webpack_require__(98);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _usersAPI = __webpack_require__(185);
+
+var UsersAPI = _interopRequireWildcard(_usersAPI);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22173,12 +22181,31 @@ var App = function (_React$Component) {
     function App(props) {
         _classCallCheck(this, App);
 
-        return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+        _this.state = {
+            users: [],
+            error: "no error",
+            selectedUser: null
+        };
+        return _this;
     }
 
     _createClass(App, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            UsersAPI.fetchAllUsers().then(function (res) {
+                return _this2.setState({ users: res.users });
+            }).catch(function (error) {
+                return _this2.setState({ error: error });
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
+            console.log(this.state.users, _typeof(this.state.users));
             return _react2.default.createElement(
                 'div',
                 { className: 'app' },
@@ -22186,7 +22213,15 @@ var App = function (_React$Component) {
                     'h1',
                     null,
                     ' hello'
-                )
+                ),
+                this.state.users.map(function (user, i) {
+                    return _react2.default.createElement(
+                        'h1',
+                        { key: user.legal_names + i },
+                        user.legal_names
+                    );
+                }),
+                this.state.error
             );
         }
     }]);
@@ -22195,6 +22230,25 @@ var App = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = App;
+
+/***/ }),
+/* 185 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var fetchAllUsers = exports.fetchAllUsers = function fetchAllUsers() {
+    var options = {
+        method: "GET"
+    };
+    return fetch('api/users', options).then(function (res) {
+        return res.json();
+    });
+};
 
 /***/ })
 /******/ ]);
