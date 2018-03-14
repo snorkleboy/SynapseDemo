@@ -22229,7 +22229,6 @@ var App = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            console.log(this.state);
 
             if (!this.state.loading) {
                 return _react2.default.createElement(
@@ -22291,7 +22290,7 @@ exports.default = function (_ref) {
                     "li",
                     {
                         className: user.id === selectedUser.id ? "selected userlist-li" : 'userlist-li',
-                        id: i.toString() + user.legal_names[0],
+                        key: i.toString() + user.legal_names[0],
                         onClick: selectUser(user)
                     },
                     user.legal_names[0]
@@ -22336,10 +22335,10 @@ exports.default = function (_ref) {
             _react2.default.createElement(
                 'ul',
                 null,
-                user.legal_names.slice(1).map(function (name) {
+                user.legal_names.slice(1).map(function (name, i) {
                     return _react2.default.createElement(
                         'li',
-                        null,
+                        { key: name + i.toString() },
                         name
                     );
                 })
@@ -22362,10 +22361,10 @@ exports.default = function (_ref) {
             _react2.default.createElement(
                 'ul',
                 null,
-                user.logins.map(function (login) {
+                user.logins.map(function (login, i) {
                     return _react2.default.createElement(
                         'li',
-                        null,
+                        { key: login.email + i.toString() },
                         login.email
                     );
                 })
@@ -22378,10 +22377,10 @@ exports.default = function (_ref) {
             _react2.default.createElement(
                 'ul',
                 null,
-                user.phone_numbers.map(function (num) {
+                user.phone_numbers.map(function (num, i) {
                     return _react2.default.createElement(
                         'li',
-                        null,
+                        { key: num + i.toString() },
                         num
                     );
                 })
@@ -22424,7 +22423,7 @@ var fetchAllUsers = exports.fetchAllUsers = function fetchAllUsers() {
         method: "GET"
     };
     return fetch('api/users', options).then(function (res) {
-        console.log(res);return res.json();
+        return res.json();
     });
 };
 

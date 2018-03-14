@@ -39,8 +39,7 @@ class App extends React.Component {
         return handler.bind(this);
     }
     render() {
-        console.log(this.state)
-         
+
         if (!this.state.loading){
             return (
                 <main className="app">

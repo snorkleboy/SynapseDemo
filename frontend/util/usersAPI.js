@@ -5,7 +5,5 @@ export const fetchAllUsers =  function(){
         method: "GET"
     }
     return fetch('api/users', options)
-    .then((res)=>{
-        console.log(res);return res.json()
-    })
+    .then((res)=>res.json())
 }

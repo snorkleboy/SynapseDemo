@@ -8,7 +8,7 @@ export default function({users, selectedUser, selectUser}){
                     users.map((user, i) => (
                         <li 
                             className={user.id === selectedUser.id ? "selected userlist-li" : 'userlist-li'}
-                            id={i.toString() + user.legal_names[0]}
+                            key={i.toString() + user.legal_names[0]}
                             onClick={selectUser(user)}
                         >
                             {user.legal_names[0]} 
