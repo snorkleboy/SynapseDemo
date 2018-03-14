@@ -22179,9 +22179,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var _user = {
     id: '',
-    logins: '',
-    phone_numbers: '',
-    legal_names: '',
+    logins: [{ email: '' }],
+    phone_numbers: [],
+    legal_names: [],
     note: '',
     is_business: ''
 };
@@ -22195,8 +22195,8 @@ var App = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
         _this.state = {
-            users: [],
-            error: "no error",
+            users: [_user],
+            error: null,
             selectedUser: _user,
             loading: true
         };
@@ -22215,7 +22215,10 @@ var App = function (_React$Component) {
                     loading: false
                 });
             }).catch(function (error) {
-                return _this2.setState({ error: error });
+                return _this2.setState({
+                    error: error,
+                    loading: false
+                });
             });
         }
     }, {
@@ -22229,7 +22232,7 @@ var App = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-
+            console.log(this.state.error);
             if (!this.state.loading) {
                 return _react2.default.createElement(
                     'main',
@@ -22239,6 +22242,11 @@ var App = function (_React$Component) {
                         null,
                         'My Users'
                     ),
+                    this.state.error ? _react2.default.createElement(
+                        'h2',
+                        { className: 'error' },
+                        'this.state.error'
+                    ) : null,
                     _react2.default.createElement(
                         'div',
                         { className: 'row' },
@@ -22423,6 +22431,14 @@ var fetchAllUsers = exports.fetchAllUsers = function fetchAllUsers() {
         method: "GET"
     };
     return fetch('api/users', options).then(function (res) {
+        var json = res.json();
+        if (res.status === 'ok') {
+            return json;
+        } else {
+            return json.then(function (err) {
+                throw err;
+            });
+        }
         return res.json();
     });
 };

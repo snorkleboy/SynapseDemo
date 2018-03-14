@@ -7,9 +7,9 @@ import * as UsersAPI from '../util/usersAPI'
 
 const _user={
     id:'',
-    logins:'',
-    phone_numbers:'',
-    legal_names:'',
+    logins:[{email:''}],
+    phone_numbers:[],
+    legal_names:[],
     note:'',
     is_business:''
 }
@@ -17,8 +17,8 @@ class App extends React.Component {
     constructor(props) {
         super(props)
         this.state={
-            users:[],
-            error:"no error",
+            users: [_user],
+            error:null,
             selectedUser: _user,
             loading:true
         };
@@ -30,7 +30,10 @@ class App extends React.Component {
                 selectedUser: res.users[0],
                 loading:false
             }))
-            .catch((error) => this.setState({error}));
+            .catch((error) => this.setState({
+                error,
+                loading: false
+            }));
     }
     handleUsernameClick(user){
         const handler = function(e){
@@ -39,11 +42,17 @@ class App extends React.Component {
         return handler.bind(this);
     }
     render() {
-
+        console.log(this.state.error);
         if (!this.state.loading){
             return (
                 <main className="app">
                     <h1>My Users</h1>
+                        {
+                            this.state.error? 
+                                <h2 className='error'>this.state.error</h2> 
+                            : 
+                                null
+                        }
                     <div className="row">
                         <UserList
                             users={this.state.users}
