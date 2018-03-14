@@ -1,0 +1,12 @@
+.app{
+    text-align: center;
+    background-color: aquamarine;
+    width: fit-content;
+    padding: 3%;
+    margin: auto;
+
+}
+
+.row{
+    display: flex;
+}

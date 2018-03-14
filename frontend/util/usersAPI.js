@@ -4,5 +4,8 @@ export const fetchAllUsers =  function(){
     const options = { 
         method: "GET"
     }
-    return fetch('api/users', options).then((res)=> res.json())
+    return fetch('api/users', options)
+    .then((res)=>{
+        console.log(res);return res.json()
+    })
 }

@@ -44,13 +44,17 @@ class App extends React.Component {
         if (!this.state.loading){
             return (
                 <main className="app">
-                    <UserList 
-                        users={this.state.users} 
-                        selectUser={this.handleUsernameClick.bind(this)}
-                    />
-                    <UserDetail 
-                        user={this.state.selectedUser}
-                    />
+                    <h1>My Users</h1>
+                    <div className="row">
+                        <UserList
+                            users={this.state.users}
+                            selectedUser={this.state.selectedUser}
+                            selectUser={this.handleUsernameClick.bind(this)}
+                        />
+                        <UserDetail
+                            user={this.state.selectedUser}
+                        />
+                    </div>
                 </main>
             )
         } else {

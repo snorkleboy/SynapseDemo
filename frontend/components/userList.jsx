@@ -1,13 +1,14 @@
 import React from 'react';
 
-export default function({users, selectUser}){
+export default function({users, selectedUser, selectUser}){
     return(
-        <section>
+        <section className="userList">
             <ul>
                 {
                     users.map((user, i) => (
                         <li 
-                            id={user.legal_name+i}
+                            className={user.id === selectedUser.id ? "selected userlist-li" : 'userlist-li'}
+                            id={i.toString() + user.legal_names[0]}
                             onClick={selectUser(user)}
                         >
                             {user.legal_names[0]} 
