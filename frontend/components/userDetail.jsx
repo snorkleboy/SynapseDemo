@@ -9,7 +9,7 @@ export default function({user}){
             <h1>{user.legal_names[0]}</h1>
             { 
                 user.legal_names.length > 1 ?
-                    <label>Other Names
+                    <label>Other Names:
                         <ul>
                             {
                                 user.legal_names.slice(1).map(((name) => <li>{name}</li>))
@@ -19,15 +19,18 @@ export default function({user}){
                 :
                     null
             }
-            <h1>{user.id}</h1>
-            <label>Emails
+            <label> User ID: 
+                <h2>{user.id}</h2>
+            </label>
+            
+            <label>Emails: 
                 <ul>
                     {
                         user.logins.map(((login) => <li>{login.email}</li>))
                     }
                 </ul>
             </label>
-            <label> Phone Numbers
+            <label>Phone Numbers: 
                 <ul>
                     {
                         user.phone_numbers.map((num) => <li>{num}</li>)
@@ -36,8 +39,8 @@ export default function({user}){
             </label>
 
 
-            <h1>This is {user.is_business ? "" : "not"} a business</h1>
-            <h1>Note: {user.note ? user.note : "none"}</h1>
+            <h2>This is {user.is_business ? "" : "not"} a business</h2>
+            <h2>Notes: {user.note ? user.note : "none"}</h2>
         </section>
     );
 }

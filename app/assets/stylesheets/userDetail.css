@@ -1,12 +1,23 @@
 .userDetail {
     background-color: white;
     padding: 3%;
-    width: fit-content;
     margin: 2%;
     width: 50vw;
+    text-align: left;
+    font-size: 20px;
+}
+.userDetail > *{
+    padding: 3%;
+}
+.userDetail > h1{
+    text-align: center;
+    font-size: 30px;
+}
+label {
+    display: flex;
 }
 
-.label{
-    display: flex;
-    padding: 3%;
+label ul, label h2  {
+    margin-left: 2%;
+    color: rgb(80, 58, 100);
 }

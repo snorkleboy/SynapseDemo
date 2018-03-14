@@ -22332,7 +22332,7 @@ exports.default = function (_ref) {
         user.legal_names.length > 1 ? _react2.default.createElement(
             'label',
             null,
-            'Other Names',
+            'Other Names:',
             _react2.default.createElement(
                 'ul',
                 null,
@@ -22346,14 +22346,19 @@ exports.default = function (_ref) {
             )
         ) : null,
         _react2.default.createElement(
-            'h1',
+            'label',
             null,
-            user.id
+            ' User ID:',
+            _react2.default.createElement(
+                'h2',
+                null,
+                user.id
+            )
         ),
         _react2.default.createElement(
             'label',
             null,
-            'Emails',
+            'Emails:',
             _react2.default.createElement(
                 'ul',
                 null,
@@ -22369,7 +22374,7 @@ exports.default = function (_ref) {
         _react2.default.createElement(
             'label',
             null,
-            ' Phone Numbers',
+            'Phone Numbers:',
             _react2.default.createElement(
                 'ul',
                 null,
@@ -22383,16 +22388,16 @@ exports.default = function (_ref) {
             )
         ),
         _react2.default.createElement(
-            'h1',
+            'h2',
             null,
             'This is ',
             user.is_business ? "" : "not",
             ' a business'
         ),
         _react2.default.createElement(
-            'h1',
+            'h2',
             null,
-            'Note: ',
+            'Notes: ',
             user.note ? user.note : "none"
         )
     );
