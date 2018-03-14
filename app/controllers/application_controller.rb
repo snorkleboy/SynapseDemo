@@ -5,22 +5,33 @@ class ApplicationController < ActionController::Base
     # https://docs.synapsepay.com/docs/api-initialization
     args = {
       # synapse client_id
-      client_id:        'client_id_5p7x3zfEglJOGcR2beTCyNAKtLnVSFBXh6vdos4k',
+      client_id:        ENV.fetch('CLIENT_ID'),
       # synapse client_secret
-      client_secret:    'client_secret_nP213c0wuyWIdKZRXmjHTDC0FxNBkvLoVYfi6glt',
+      client_secret:    ENV.fetch('CLIENT_SECRET'),
       # a hashed value, either unique to user or static for app
-      fingerprint:      'e83cf6ddcf778e37bfe3d48fc78a6502062fc1030449628c699ef3c4ffa6f9a2000b8acc3c4c0addd8013285bb52c89e5267b628ca02fa84a6d71fe186b7cd5d',
+      fingerprint:      ENV.fetch('FINGERPRINT'),
       # the user's IP
       ip_address:       '127.0.0.1',
       # (optional) requests go to sandbox endpoints if true
       development_mode: true,
       # (optional) if true logs requests to stdout
-      logging:          true,
-      # (optional) file path to write logs to
-      log_to:           nil
+      logging:          true
     } 
     @Synapse_Client = SynapsePayRest::Client.new(args)
   end
 
-  def synapse_
+  def synapse_get_users
+    args = {
+      client:   client,
+      # (optional) uses API default unless specified
+      page:     1,
+      # (optional) uses API default of 20 unless specified, larger values take longer
+      per_page: 50,
+      # (optional) filters by name/email match
+      query:    nil
+    }
+    users = SynapsePayRest::User.all(args2)
+    p '','','','',users.map{|obj| obj.legal_names}
+    
+  end
 end
