@@ -19,12 +19,17 @@ class App extends React.Component {
         this.state={
             users:[],
             error:"no error",
-            selectedUser: _user
+            selectedUser: _user,
+            loading:true
         };
     }
     componentDidMount(){
         UsersAPI.fetchAllUsers()
-            .then((res)  => this.setState({users: res.users}))
+            .then((res)  => this.setState({
+                users: res.users,
+                selectedUser: res.users[0],
+                loading:false
+            }))
             .catch((error) => this.setState({error}));
     }
     handleUsernameClick(user){
@@ -34,18 +39,25 @@ class App extends React.Component {
         return handler.bind(this);
     }
     render() {
-        console.log(this.state.error, this.state.users, typeof this.state.users)
-        return (
-            <main className="app">
-                <UserList 
-                    users={this.state.users} 
-                    selectUser={this.handleUsernameClick.bind(this)}
-                />
-                <UserDetail 
-                    user={this.state.selectedUser}
-                />
-            </main>
-        );
+        console.log(this.state)
+         
+        if (!this.state.loading){
+            return (
+                <main className="app">
+                    <UserList 
+                        users={this.state.users} 
+                        selectUser={this.handleUsernameClick.bind(this)}
+                    />
+                    <UserDetail 
+                        user={this.state.selectedUser}
+                    />
+                </main>
+            )
+        } else {
+            return (
+                <div className="loader"></div>
+            )
+        }
     }
 }
 

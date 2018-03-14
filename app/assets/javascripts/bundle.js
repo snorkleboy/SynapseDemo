@@ -22149,8 +22149,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(49);
@@ -22199,7 +22197,8 @@ var App = function (_React$Component) {
         _this.state = {
             users: [],
             error: "no error",
-            selectedUser: _user
+            selectedUser: _user,
+            loading: true
         };
         return _this;
     }
@@ -22210,7 +22209,11 @@ var App = function (_React$Component) {
             var _this2 = this;
 
             UsersAPI.fetchAllUsers().then(function (res) {
-                return _this2.setState({ users: res.users });
+                return _this2.setState({
+                    users: res.users,
+                    selectedUser: res.users[0],
+                    loading: false
+                });
             }).catch(function (error) {
                 return _this2.setState({ error: error });
             });
@@ -22226,18 +22229,23 @@ var App = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            console.log(this.state.error, this.state.users, _typeof(this.state.users));
-            return _react2.default.createElement(
-                'main',
-                { className: 'app' },
-                _react2.default.createElement(_userList2.default, {
-                    users: this.state.users,
-                    selectUser: this.handleUsernameClick.bind(this)
-                }),
-                _react2.default.createElement(_userDetail2.default, {
-                    user: this.state.selectedUser
-                })
-            );
+            console.log(this.state);
+
+            if (!this.state.loading) {
+                return _react2.default.createElement(
+                    'main',
+                    { className: 'app' },
+                    _react2.default.createElement(_userList2.default, {
+                        users: this.state.users,
+                        selectUser: this.handleUsernameClick.bind(this)
+                    }),
+                    _react2.default.createElement(_userDetail2.default, {
+                        user: this.state.selectedUser
+                    })
+                );
+            } else {
+                return _react2.default.createElement('div', { className: 'loader' });
+            }
         }
     }]);
 
