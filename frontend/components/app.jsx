@@ -1,14 +1,25 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+
+import UserList from './userList';
+import UserDetail from './userDetail';
 
 import * as UsersAPI from '../util/usersAPI'
+
+const _user={
+    id:'',
+    logins:'',
+    phone_numbers:'',
+    legal_names:'',
+    note:'',
+    is_business:''
+}
 class App extends React.Component {
     constructor(props) {
         super(props)
         this.state={
             users:[],
             error:"no error",
-            selectedUser:null
+            selectedUser: _user
         };
     }
     componentDidMount(){
@@ -16,18 +27,27 @@ class App extends React.Component {
             .then((res)  => this.setState({users: res.users}))
             .catch((error) => this.setState({error}));
     }
+    handleUsernameClick(user){
+        const handler = function(e){
+            this.setState({selectedUser:user})
+        }
+        return handler.bind(this);
+    }
     render() {
-        console.log(this.state.users, typeof this.state.users)
+        console.log(this.state.error, this.state.users, typeof this.state.users)
         return (
-            <div className="app">
-                <h1> hello</h1>
-                {this.state.users.map((user,i)=>{
-                    return <h1 key={user.legal_names+ i}>{user.legal_names}</h1>
-                })}
-                {this.state.error}
-            </div>
+            <main className="app">
+                <UserList 
+                    users={this.state.users} 
+                    selectUser={this.handleUsernameClick.bind(this)}
+                />
+                <UserDetail 
+                    user={this.state.selectedUser}
+                />
+            </main>
         );
     }
 }
 
 export default App;
+
