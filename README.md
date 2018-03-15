@@ -4,12 +4,12 @@
 
 
 ### table of contents
-- [though process](though-process)
+- [thought process](though_process)
 - [running locally](#running_locally)
 - [backend](#backend)
 - [frontend](#frontend)
 - [running tests](#running_tests)
-## though process
+## thought process
 The objective was to create a simple front end focused app around some of SynapseFi's fine API. Since the API doesn't allow for CORS requests I setup a simple back end which delivers a react app and has a single API route which uses SynapseFi's Ruby plug in to interact with the SynapseAPI. I Used a client ID and Secret from the Docs. 
 I only hit the get/users options of the SynapseFI api, as operations like transactions or adding bank accounts would require a more complex back end. 
 
@@ -31,8 +31,6 @@ The back end is built using a quick Rails app and SynapseFi's Ruby plug in. I do
 There are two routes, one is the root route which delivers a page with an element with an id for React to hook into.
 
 the other route is /api/users which maps to synapse_users_controller#index. synapse_users_controller inherits from synapse_super_controller, where I would put the implementation of any calls to SynapseFI API. 
-
-
 
 
 ### synapse_users_controller
