@@ -1,14 +1,14 @@
-# Synapse Code demo [heroku](https://synapsedemo.herokuapp.com/)
+# Synapse Code demo [-heroku-](https://synapsedemo.herokuapp.com/)
 ## Tim Kharshan
 #### timkharshan@hotmail.com
 
 
 ### table of contents
-- [thought process](though_process)
-- [running locally](#running_locally)
+- [thought process](though-process)
+- [running locally](#running-locally)
 - [backend](#backend)
 - [frontend](#frontend)
-- [running tests](#running_tests)
+- [running tests](#running-tests)
 ## thought process
 The objective was to create a simple front end focused app around some of SynapseFi's fine API. Since the API doesn't allow for CORS requests I setup a simple back end which delivers a react app and has a single API route which uses SynapseFi's Ruby plug in to interact with the SynapseAPI. I Used a client ID and Secret from the Docs. 
 I only hit the get/users options of the SynapseFI api, as operations like transactions or adding bank accounts would require a more complex back end. 
