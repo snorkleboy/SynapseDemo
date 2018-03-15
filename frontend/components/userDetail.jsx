@@ -8,7 +8,7 @@ export default function({user}){
     return (
         <section className='userDetail'>
             <h1>{user.legal_names[0]}</h1>
-                {extraNamesMaker(user.legal_names)}
+            {extraNamesMaker(user.legal_names)}
             <label> User ID: 
                 <h2>{user.id}</h2>
             </label>
@@ -37,9 +37,7 @@ function extraNamesMaker(userNames){
         return (
             < label > Other Names:
                 <ul>
-                    {
-                        extraNames
-                    }
+                    {extraNames}
                 </ul>
             </label >
         )

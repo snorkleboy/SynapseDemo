@@ -18354,7 +18354,9 @@ var App = function (_React$Component) {
         key: 'handleUsernameClick',
         value: function handleUsernameClick(user) {
             var handler = function handler(e) {
-                this.setState({ selectedUser: user });
+                this.setState({
+                    selectedUser: user
+                });
             };
             return handler.bind(this);
         }
@@ -18362,6 +18364,11 @@ var App = function (_React$Component) {
         key: 'render',
         value: function render() {
             if (!this.state.loading) {
+                var error = this.state.error ? _react2.default.createElement(
+                    'h2',
+                    { className: 'error' },
+                    this.state.error
+                ) : null;
                 return _react2.default.createElement(
                     'main',
                     { className: 'app' },
@@ -18370,11 +18377,7 @@ var App = function (_React$Component) {
                         null,
                         'My Users'
                     ),
-                    this.state.error ? _react2.default.createElement(
-                        'h2',
-                        { className: 'error' },
-                        this.state.error
-                    ) : null,
+                    error,
                     _react2.default.createElement(
                         'div',
                         { className: 'row' },
@@ -18584,7 +18587,6 @@ var fetchAllUsers = exports.fetchAllUsers = function fetchAllUsers() {
                 throw err;
             });
         }
-        return res.json();
     });
 };
 

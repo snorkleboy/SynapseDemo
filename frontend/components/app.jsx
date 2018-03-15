@@ -14,44 +14,45 @@ const _user={
     is_business:''
 }
 class App extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state={
-            users: [_user],
-            error:null,
-            selectedUser: _user,
-            loading:true
-        };
-    }
-    componentDidMount(){
-        UsersAPI.fetchAllUsers()
-            .then((res)  => this.setState({
-                users: res.users,
-                selectedUser: res.users[0],
-                loading:false
-            }))
-            .catch((error) => this.setState({
-                error,
-                loading: false
-            }));
-    }
-    handleUsernameClick(user){
-        const handler = function(e){
-            this.setState({selectedUser:user})
+        constructor(props) {
+            super(props)
+            this.state = {
+                users: [_user],
+                error: null,
+                selectedUser: _user,
+                loading: true
+            };
         }
-        return handler.bind(this);
-    }
+        componentDidMount() {
+            UsersAPI.fetchAllUsers()
+                .then((res) => this.setState({
+                    users: res.users,
+                    selectedUser: res.users[0],
+                    loading: false
+                }))
+                .catch((error) => this.setState({
+                    error,
+                    loading: false
+                }));
+        }
+        handleUsernameClick(user) {
+            const handler = function (e) {
+                this.setState({
+                    selectedUser: user
+                })
+            }
+            return handler.bind(this);
+        }
     render() {
         if (!this.state.loading){
+            const error = this.state.error ?
+                    <h2 className='error'>{this.state.error}</h2>
+                :
+                    null
             return (
                 <main className="app">
                     <h1>My Users</h1>
-                    {
-                        this.state.error? 
-                            <h2 className='error'>{this.state.error}</h2> 
-                        : 
-                            null
-                    }
+                    {error}
                     <div className="row">
                         <UserList
                             users={this.state.users}
