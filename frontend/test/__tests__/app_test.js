@@ -1,21 +1,21 @@
+import fetchMock from 'fetch-mock'
+import React from 'react';
+import renderer from 'react-test-renderer';
+import toJson from 'enzyme-to-json';
+import * as Helper from '../helper';
+
 import App from '../../components/app';
 import UserDetail from '../../components/userDetail';
 import UserList from '../../components/userList';
-import fetchMock from 'fetch-mock'
 import * as SynAPI from '../../util/usersAPI'
-import * as Helper from '../helper';
-import React from 'react';
-// test('App component', () => {
-    // const wrapper = shallow(<app/>);
-    // expect(wrapper).toMatchSnapshot();
-// });
+
 fetchMock.get(`*`, JSON.stringify(Helper._userList))
-const fetchAllUsers = jest.spyOn(SynAPI, 'fetchAllUsers');
 
 describe('App Component', () => {
+    const fetchAllUsers = jest.spyOn(SynAPI, 'fetchAllUsers');
     const wrapper = shallow(<App />);
     describe("renders loader and fetches data OnMount",()=>{
-
+        
         it('should call util/usersAPI.fetchAllUsers after mounting', () => {
             expect(fetchAllUsers).toHaveBeenCalledTimes(1);
         });
@@ -60,48 +60,30 @@ describe('App Component', () => {
     })
 })
 
-// describe("UserList",()=>{
-    // const mockClickHandler = jest.fn();
-    // const wrapper = shallow(<UserList users={Helper._userList}/>);
-// 
-// })
+describe("UserList",()=>{
+    it("should match its filled snapshot",()=>{
 
+        const tree = renderer.create(
+            <UserList
+                users={Helper._userList}
+                selectUser={function(){}}
+                selectedUser={Helper._userList[0]}
+            />
+        ).toJSON();
 
-// wrapper.find('[name="toggle-preview"]').simulate('click');
-// loginComponent.setState({ error: true });
-// expect(loginComponent.find(Notification).length).toBe(1);
+        expect(tree).toMatchSnapshot();
+    });
 
-// describe("API",()=>{
-//     it('should fetch array of objects',()=>{
-//         expect.assertions(1)
-//         return SynAPI.fetchAllUsers.then(res=>{
-//              expect(res).toHaveProperty('id')
-//              expect(res[0])
-//         })
-//     })
-// }
+})
 
-// test(`using promises`, () => {
-    
-//     return fetchResponseJson(`http://foo.bar`).then(
-//         (responseJson) => { expect(responseJson).toHaveProperty(`Rick`, `I turned myself into a pickle, Morty!`) })
-// })
-// describe('UserList Component', () => {
+describe("UserDetail", () => {
+    it("should match its filled snapshot", () => {
+        const tree = renderer.create(
+            <UserDetail
+                user={Helper._userList[0]}
+            />
+        ).toJSON();
 
-//     describe("Should render an array of user objects", () => {
-//         it('accepts users as props',()=>{
-//             <UserList users={Helper._userList}/>
-//         })
-//         it('should respond to change event and change the state of the Login Component', () => {
-
-//             const wrapper = shallow(<Login />);
-//             wrapper.find('#email').simulate('change', { target: { name: 'email', value: 'blah@gmail.com' } });
-
-//             expect(wrapper.state('email')).toEqual('blah@gmail.com');
-//         })
-//     })
-
-//     it('should accept an Array of User Objects')
-// })
-
-
+        expect(tree).toMatchSnapshot();
+    });
+})

@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserDetail should match its filled snapshot 1`] = `
+<section
+  className="userDetail"
+>
+  <h1>
+    testname
+  </h1>
+  <label>
+     User ID:
+    <h2>
+      testid
+    </h2>
+  </label>
+  <label>
+    Emails:
+    <ul>
+      <li>
+        testemail
+      </li>
+    </ul>
+  </label>
+  <label>
+    Phone Numbers:
+    <ul>
+      <li>
+        testnumber
+      </li>
+    </ul>
+  </label>
+  <h2>
+    This is 
+    not
+     a business
+  </h2>
+  <h2>
+    Notes: 
+    none
+  </h2>
+</section>
+`;
+
+exports[`UserList should match its filled snapshot 1`] = `
+<section
+  className="userList"
+>
+  <ul>
+    <li
+      className="selected userlist-li"
+      onClick={undefined}
+    >
+      testname
+    </li>
+    <li
+      className="userlist-li"
+      onClick={undefined}
+    >
+      Providenci Jacobs
+    </li>
+    <li
+      className="userlist-li"
+      onClick={undefined}
+    >
+      test tester
+    </li>
+  </ul>
+</section>
+`;

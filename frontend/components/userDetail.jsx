@@ -1,40 +1,26 @@
 import React from 'react';
 
-// user comes with
-// :id,:logins([{email:,scope:)}]),:phone_numbers([]),:legal_names([]),:note,:is_business
+
 
 export default function({user}){
+    const emails = user.logins.map(((login, i) => <li key={login.email}>{login.email}</li>))
+    const phoneNumbers = user.phone_numbers.map((num, i) => <li key={num}>{num}</li>)
     return (
         <section className='userDetail'>
             <h1>{user.legal_names[0]}</h1>
-            { 
-                user.legal_names.length > 1 ?
-                    <label>Other Names:
-                        <ul>
-                            {
-                                user.legal_names.slice(1).map(((name,i) => <li key={name}>{name}</li>))
-                            }
-                        </ul>
-                    </label>
-                :
-                    null
-            }
+                {extraNamesMaker(user.legal_names)}
             <label> User ID: 
                 <h2>{user.id}</h2>
             </label>
             
             <label>Emails: 
                 <ul>
-                    {
-                        user.logins.map(((login, i) => <li key={login.email}>{login.email}</li>))
-                    }
+                    {emails}
                 </ul>
             </label>
             <label>Phone Numbers: 
                 <ul>
-                    {
-                        user.phone_numbers.map((num,i) => <li key={num}>{num}</li>)
-                    }
+                    {phoneNumbers}
                 </ul>
             </label>
 
@@ -43,4 +29,21 @@ export default function({user}){
             <h2>Notes: {user.note ? user.note : "none"}</h2>
         </section>
     );
+}
+
+function extraNamesMaker(userNames){
+    if (userNames.length > 1) {
+        extraNames = user.legal_names.slice(1).map(((name, i) => <li key={name}>{name}</li>))
+        return (
+            < label > Other Names:
+                <ul>
+                    {
+                        extraNames
+                    }
+                </ul>
+            </label >
+        )
+    } else {
+        return null
+    }
 }

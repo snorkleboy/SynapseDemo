@@ -18415,23 +18415,29 @@ exports.default = function (_ref) {
         selectedUser = _ref.selectedUser,
         selectUser = _ref.selectUser;
 
+
+    var userLi = void 0;
+    if (users && users.length > 0) {
+        userLi = users.map(function (user, i) {
+            return _react2.default.createElement(
+                'li',
+                {
+                    className: user.id === selectedUser.id ? "selected userlist-li" : 'userlist-li',
+                    key: i.toString() + user.legal_names[0],
+                    onClick: selectUser(user)
+                },
+                user.legal_names[0]
+            );
+        });
+    }
+
     return _react2.default.createElement(
-        "section",
-        { className: "userList" },
+        'section',
+        { className: 'userList' },
         _react2.default.createElement(
-            "ul",
+            'ul',
             null,
-            users.map(function (user, i) {
-                return _react2.default.createElement(
-                    "li",
-                    {
-                        className: user.id === selectedUser.id ? "selected userlist-li" : 'userlist-li',
-                        key: i.toString() + user.legal_names[0],
-                        onClick: selectUser(user)
-                    },
-                    user.legal_names[0]
-                );
-            })
+            userLi
         )
     );
 };
@@ -18456,6 +18462,20 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = function (_ref) {
     var user = _ref.user;
 
+    var emails = user.logins.map(function (login, i) {
+        return _react2.default.createElement(
+            'li',
+            { key: login.email },
+            login.email
+        );
+    });
+    var phoneNumbers = user.phone_numbers.map(function (num, i) {
+        return _react2.default.createElement(
+            'li',
+            { key: num },
+            num
+        );
+    });
     return _react2.default.createElement(
         'section',
         { className: 'userDetail' },
@@ -18464,22 +18484,7 @@ exports.default = function (_ref) {
             null,
             user.legal_names[0]
         ),
-        user.legal_names.length > 1 ? _react2.default.createElement(
-            'label',
-            null,
-            'Other Names:',
-            _react2.default.createElement(
-                'ul',
-                null,
-                user.legal_names.slice(1).map(function (name, i) {
-                    return _react2.default.createElement(
-                        'li',
-                        { key: name },
-                        name
-                    );
-                })
-            )
-        ) : null,
+        extraNamesMaker(user.legal_names),
         _react2.default.createElement(
             'label',
             null,
@@ -18497,13 +18502,7 @@ exports.default = function (_ref) {
             _react2.default.createElement(
                 'ul',
                 null,
-                user.logins.map(function (login, i) {
-                    return _react2.default.createElement(
-                        'li',
-                        { key: login.email },
-                        login.email
-                    );
-                })
+                emails
             )
         ),
         _react2.default.createElement(
@@ -18513,13 +18512,7 @@ exports.default = function (_ref) {
             _react2.default.createElement(
                 'ul',
                 null,
-                user.phone_numbers.map(function (num, i) {
-                    return _react2.default.createElement(
-                        'li',
-                        { key: num },
-                        num
-                    );
-                })
+                phoneNumbers
             )
         ),
         _react2.default.createElement(
@@ -18543,6 +18536,30 @@ var _react = __webpack_require__(1);
 var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function extraNamesMaker(userNames) {
+    if (userNames.length > 1) {
+        extraNames = user.legal_names.slice(1).map(function (name, i) {
+            return _react2.default.createElement(
+                'li',
+                { key: name },
+                name
+            );
+        });
+        return _react2.default.createElement(
+            'label',
+            null,
+            ' Other Names:',
+            _react2.default.createElement(
+                'ul',
+                null,
+                extraNames
+            )
+        );
+    } else {
+        return null;
+    }
+}
 
 /***/ }),
 /* 30 */
