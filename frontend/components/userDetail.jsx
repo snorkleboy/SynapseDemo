@@ -3,7 +3,7 @@ import React from 'react';
 
 
 export default function({user}){
-    const emails = user.logins.map(((login, i) => <li key={login.email}>{login.email}</li>))
+    const emails = user.logins.map((login, i) => <li key={login.email}>{login.email}</li>)
     const phoneNumbers = user.phone_numbers.map((num, i) => <li key={num}>{num}</li>)
     return (
         <section className='userDetail'>

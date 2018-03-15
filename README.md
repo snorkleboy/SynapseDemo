@@ -231,7 +231,7 @@ The User Detail component is a simple presentational component which takes in a 
 
 first I get some list properties out of the user and map the items to li's
 ```
-const emails = user.logins.map(((login, i) => <li key={login.email}>{login.email}</li>))
+const emails = user.logins.map((login, i) => <li key={login.email}>{login.email}</li>)
 const phoneNumbers = user.phone_numbers.map((num, i) => <li key={num}>{num}</li>)
 ```
 
@@ -262,7 +262,7 @@ function extraNamesMaker(userNames){
 }
 ```
 
-So it will display the first legal name and dispaly any other names in a other names list, if there are other names.  
+So it will display the first legal name and display any other names in a other names list, if there are other names.  
 ```
 <h1>{user.legal_names[0]}</h1>
 {extraNamesMaker(user.legal_names)}
