@@ -12,7 +12,7 @@ export default function({user}){
                     <label>Other Names:
                         <ul>
                             {
-                                user.legal_names.slice(1).map(((name,i) => <li key={name+i.toString()}>{name}</li>))
+                                user.legal_names.slice(1).map(((name,i) => <li key={name}>{name}</li>))
                             }
                         </ul>
                     </label>
@@ -26,14 +26,14 @@ export default function({user}){
             <label>Emails: 
                 <ul>
                     {
-                        user.logins.map(((login, i) => <li key={login.email + i.toString()}>{login.email}</li>))
+                        user.logins.map(((login, i) => <li key={login.email}>{login.email}</li>))
                     }
                 </ul>
             </label>
             <label>Phone Numbers: 
                 <ul>
                     {
-                        user.phone_numbers.map((num,i) => <li key={num + i.toString()}>{num}</li>)
+                        user.phone_numbers.map((num,i) => <li key={num}>{num}</li>)
                     }
                 </ul>
             </label>

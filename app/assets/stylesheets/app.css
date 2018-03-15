@@ -1,6 +1,6 @@
 .app{
     text-align: center;
-    background-color: aquamarine;
+    background-color: rgb(127, 225, 255);
     width: 75%;
     padding: 3%;
     margin: auto;
@@ -17,4 +17,5 @@
 .app > h1{
     font-size: 30px;
     font-weight: 700;
+    color: whitesmoke;
 }
