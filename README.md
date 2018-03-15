@@ -10,9 +10,8 @@
 - [frontend](#frontend)
 - [running tests](#running-tests)
 ## thought process
-The objective was to create a simple front end focused app around some of SynapseFi's fine API. Since the API doesn't allow for CORS requests I setup a simple back end which delivers a react app and has a single API route which uses SynapseFi's Ruby plug in to interact with the SynapseAPI. I Used a client ID and Secret from the Docs. 
+The objective was to create a simple front end focused app around a bit of SynapseFi's fine API. Since the API doesn't allow for CORS requests I setup a simple back end which delivers a react app and has a single API route which uses SynapseFi's Ruby plug in to interact with the SynapseAPI. I Used a client ID and Secret copied from the Docs. 
 I only hit the get/users options of the SynapseFI api, as operations like transactions or adding bank accounts would require a more complex back end. 
-
 The Front end is a simple 3 component React App. A parent component fetches data on Mount and displays a loader until it has data to display. Then it displays a list of names in the User List component and details about specific users in the User Detail component.
 
 Clicking on a user in the list will result in it being put in a selected field in the parent App component, which results in its details being displayed in the detail section. 
@@ -25,6 +24,7 @@ Clicking on a user in the list will result in it being put in a selected field i
  - webpack
  - rails s
  - browse to localhost:3000
+
 ## backend
 The back end is built using a quick Rails app and SynapseFi's Ruby plug in. I do not use a database in this App, but needed back end to make requests to SynapseFi's API. 
 
@@ -34,7 +34,9 @@ the other route is /api/users which maps to synapse_users_controller#index. syna
 
 
 ### synapse_users_controller
-synapse_users_controller index method initializes a SynapseFi client and makes a request for all Users associated with the use client_id. If there is an error in the process it sends back a error message and a 500 status. 
+synapse_users_controller inherits from synapse_super_controller, which uses the SynapseFi Ruby plugin methods. 
+
+synapse_users_controller's index method initializes a SynapseFi client and makes a request for all Users associated with the use client_id. If there is an error in the process it sends back a error message and a 500 status. 
 
 ```
 def index
@@ -47,6 +49,8 @@ def index
 end
 ```
 ### synapse_super_controller
+This controller is where I would put Synapse Ruby plugin implimentations into for other controllers that might need them. 
+
 the synapse_super_controller has two functions currently. One initializes a Synapse client,
 ```
 class Api::SynapseSuperController < ApplicationController
@@ -91,15 +95,15 @@ all Front end files, including tests, are nested under the front end folder.
 
 the Front end is made of three simple react components and a function that fetches data from the back end.
 
-The App component fetches data onMount, the UserList component displays the list of users, and the UserDetail component displays the details about the selected user. 
+The App component fetches data on Mount, the UserList component displays the list of users, and the UserDetail component displays the details about the selected user. 
 
-I did not use Redux because this is a small App that doesn't have complex state relationships between components other than the selected user.
+I did not use Redux because this is a small App that doesn't have complex state relationships between components other than the selected user property.
 
 
 ### Fetch function
 frontend/util has a usersAPI file which is where I would put my API call functions. 
 
-It has the one to make a call to api/users. It uses the standard Fetch API, if the response if OK then it returns the json from the response, otherwise it assumes there is a json error message and throws an error with the json. 
+It currently has one which makes a call to api/users. It uses the standard Fetch API, if the response is OK then it returns the json from the response, otherwise it assumes there is a json error message and throws an error with the json. 
  ```
  export const fetchAllUsers = function () {
      const options = {
@@ -119,7 +123,7 @@ It has the one to make a call to api/users. It uses the standard Fetch API, if t
  }
 ```
 ### App component
-The App component fetches data on mount and displays a loader until it gets its data. 
+The App component fetches data on mount and displays a loader until it gets its data. When it gets data it renders the UserList component and the UserDetail component
 
 It starts with state with a 'null' user and loading:true
 ```
@@ -149,7 +153,9 @@ componentDidMount() {
 }
 ```
 #### Render
-In its render function, if its not loading it renders a div with a loader className, otherwise it renders the good bits. It passes the list of users,the selected user, and a selectUser function which takes in a user and returns a clickHandler
+In its render function, if its loading it renders a div with a loader className, otherwise it renders the good bits. It passes the list of users,the selected user, and a selectUser(which makes clickHandlers) to the Userlist component, and it passes the selected user to the user Detail component. 
+
+it will also render any errors seen during the fetch process. 
 ```
 if (!this.state.loading){
     const error = this.state.error ?
@@ -175,7 +181,7 @@ if (!this.state.loading){
 }
 ```
 #### click handler
-the selectUser function is assigned to the following function. Its purpose is to take in a user and return a click handler which calls setState with the user. This function will be used by the UserList component to give click handlers to list items. 
+the selectUser function passed to the UserList component is assigned to the following function. Its purpose is to take in a user and return a click handler which calls setState with the user. This function will be used by the UserList component to give click handlers to list items. 
 ```
 handleUsernameClick(user) {
     const handler = function (e) {
@@ -189,11 +195,11 @@ handleUsernameClick(user) {
 ```
 ### UserList component
 
-the userList component is a presentational component which takes in a list of users, a user amongst which one is selected, and a function that assigns click handlers which will allow us to change which user is selected.
+the userList component is a presentational component which takes in a list of users, a user amongst which is selected, and a function that assigns click handlers which will allows us to change which user is selected.
 
-if there are users in the users list passed in, the component maps through the names to create LI's which it renders into a ul.
+if there are users passed in, the component maps through the names to create LI's which it renders into a ul.
 
-if the user currently being iterated over matches the selected user, it is given a selected class so that we can css it. Every entry is also assigned a click handler using the selectuser function. 
+if the user currently being iterated over matches the selected user passed in, it is given a selected class so that we can css it. Every entry is also assigned a click handler using the selectuser function. 
 
 ```
 let userLi;
@@ -223,7 +229,7 @@ return(
 ### UserDetail component
 The User Detail component is a simple presentational component which takes in a user and displays details of that user. This user is whatever user is in the selected property of the state of the App component, which is updated by clicking on names in the UserList component. 
 
-first I get some list properties out of the user and map the to li's
+first I get some list properties out of the user and map the items to li's
 ```
 const emails = user.logins.map(((login, i) => <li key={login.email}>{login.email}</li>))
 const phoneNumbers = user.phone_numbers.map((num, i) => <li key={num}>{num}</li>)
@@ -238,7 +244,7 @@ which are rendered like
 </label>
 ```
 
-if there is more than 1 legal name I decided to handle it differently with a extraNamesMaker function. Its purpose is to take in a list of names, and if there is more than one it makes an 'other names' component. 
+if there is more than 1 legal name I decided to handle it differently and wrote a extraNamesMaker function. Its purpose is to take in a list of names, and if there is more than one it makes an 'other names' section. 
 ```
 function extraNamesMaker(userNames){
     if (userNames.length > 1) {
@@ -256,7 +262,7 @@ function extraNamesMaker(userNames){
 }
 ```
 
-which is rendered like 
+So it will display the first legal name and dispaly any other names in a other names list, if there are other names.  
 ```
 <h1>{user.legal_names[0]}</h1>
 {extraNamesMaker(user.legal_names)}
