@@ -4,7 +4,7 @@
 
 
 ### table of contents
-- [thought process](though-process)
+- [thought process](#though-process)
 - [running locally](#running-locally)
 - [backend](#backend)
 - [frontend](#frontend)
