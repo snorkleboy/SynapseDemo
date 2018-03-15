@@ -10,8 +10,8 @@
 - [frontend](#frontend)
 - [running tests](#running-tests)
 ## thought process
-The objective was to create a simple front end focused app around a bit of SynapseFi's fine API. Since the API doesn't allow for CORS requests I setup a simple back end which delivers a react app and has a single API route which uses SynapseFi's Ruby plug in to interact with the SynapseAPI. I Used a client ID and Secret copied from the Docs. 
-I only hit the get/users options of the SynapseFI api, as operations like transactions or adding bank accounts would require a more complex back end. 
+The objective was to create a simple front end focused app around a bit of SynapseFi's fine API. Since the API doesn't allow for CORS requests I setup a simple back end which delivers a react app and has a single API route which uses SynapseFi's Ruby plug in to interact with the SynapseAPI. I Use a client ID and secret copied from the Docs. 
+
 The Front end is a simple 3 component React App. A parent component fetches data on Mount and displays a loader until it has data to display. Then it displays a list of names in the User List component and details about specific users in the User Detail component.
 
 Clicking on a user in the list will result in it being put in a selected field in the parent App component, which results in its details being displayed in the detail section. 
@@ -269,7 +269,7 @@ So it will display the first legal name and display any other names in a other n
 
 ```
 ## running tests
-I wrote some quick front end tests for the components. to run the tests run npm run tests. They are written in jest using enzyme and fetchmock. 
+I wrote some quick front end tests for the components. to run the tests run 'npm run tests'. They are written in jest using enzyme and fetchmock. 
 
 The tests only do a simple snapshot test for the presentational components, and for the parent app it checks that it calls the fetch function on mount, that it displays a loader with state loading:true, and doesn't without. 
 It also checks that with user data it renders the presentational components, passes down props, and that calling the click handlers it sends to the userList result in the user its called with being passed to the User detail Component. 
